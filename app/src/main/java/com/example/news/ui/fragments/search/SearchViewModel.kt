@@ -32,16 +32,4 @@ class SearchViewModel @Inject constructor(private val repository: NewsRepository
             }
         }
 
-    fun getSearchHeadlines() =
-        viewModelScope.launch {
-        searchNewsLiveData.postValue(Resource.Loading())
-        val response = repository.getHeadlines(pageNumber = searchNewsPage)
-        if (response.isSuccessful) {
-            response.body().let { res ->
-                searchNewsLiveData.postValue(Resource.Success(res))
-            }
-        } else {
-            searchNewsLiveData.postValue(Resource.Error(message = response.message()))
-        }
-    }
 }

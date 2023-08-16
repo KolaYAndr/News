@@ -44,7 +44,7 @@ class SearchFragment : Fragment() {
                 text?.let {
                     if (it.toString().isNotBlank()) {
                         viewModel.getSearchNews(query = it.toString())
-                    } else viewModel.getSearchHeadlines()
+                    }
                 }
             }
         }

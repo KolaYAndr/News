@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">News</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+   <string name="my_news">My News</string>
+   <string name="popular_news">Popular News</string>
+    <string name="like_an_article">Like an article</string>
+    <string name="share_an_article">Share an article</string>
+    <string name="article_image">Article image</string>
 </resources>

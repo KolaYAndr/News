@@ -8,7 +8,6 @@
 
     <FrameLayout
         android:id="@+id/frame_layout"
-        android:name="com.example.news.ui.fragments.MainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav_menu"
@@ -18,10 +17,10 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
-            android:name="androidx.navigation.fragment.NavHostFragment"
             app:navGraph="@navigation/nav_graph" />
 
     </FrameLayout>

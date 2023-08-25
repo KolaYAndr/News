@@ -1,11 +1,12 @@
 package com.example.news
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.news.databinding.ActivityMainBinding
-import com.example.news.ui.fragments.main.MainFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,12 +19,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        showFragment(MainFragment())
-    }
-
-    private fun showFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, fragment)
-            .commit()
+        val navController = findNavController(R.id.nav_host_fragment)
+        binding.bottomNavMenu.setupWithNavController(navController = navController)
     }
 }

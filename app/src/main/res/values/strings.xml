@@ -5,4 +5,6 @@
     <string name="like_an_article">Like an article</string>
     <string name="share_an_article">Share an article</string>
     <string name="article_image">Article image</string>
+    <string name="search">Search</string>
+    <string name="search_here">Search here</string>
 </resources>

@@ -1,55 +1,72 @@
-package com.example.news.ui.fragments.main
+package com.example.news.ui.fragments.search
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.news.databinding.FragmentMainBinding
+import com.example.news.databinding.FragmentSearchBinding
 import com.example.news.ui.adapters.NewsAdapter
 import com.example.news.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
-    private var _binding: FragmentMainBinding? = null
+class SearchFragment : Fragment() {
+    private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<MainViewModel>()
-    private lateinit var newsAdapter: NewsAdapter
-
+    private val viewModel by viewModels<SearchViewModel>()
+    lateinit var newsAdapter: NewsAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        viewModel.newsLiveData.observe(viewLifecycleOwner) { response ->
+
+        var job: Job? = null
+
+        binding.searchEditText.addTextChangedListener { text ->
+            job?.cancel()
+            job = MainScope().launch {
+                text?.let {
+                    if (it.toString().isNotBlank()) {
+                        viewModel.getSearchNews(query = it.toString())
+                    } else viewModel.getSearchHeadlines()
+                }
+            }
+        }
+
+        viewModel.searchNewsLiveData.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
-                    binding.progressBar.visibility = View.INVISIBLE
+                    binding.searchProgressBar.visibility = View.INVISIBLE
                     response.data?.let {
                         newsAdapter.differ.submitList(it.articles)
                     }
                 }
 
                 is Resource.Error -> {
-                    binding.progressBar.visibility = View.INVISIBLE
+                    binding.searchProgressBar.visibility = View.INVISIBLE
                     response.data?.let {
-                        Log.e("checkData", "MainFragment: error: $it")
+                        Log.e("checkData", "SearchFragment: error: $it")
                     }
                 }
 
                 is Resource.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
+                    binding.searchProgressBar.visibility = View.VISIBLE
                 }
             }
         }
@@ -57,7 +74,7 @@ class MainFragment : Fragment() {
 
     private fun initAdapter() {
         newsAdapter = NewsAdapter()
-        binding.newsAdapter.apply {
+        binding.searchNewsAdapter.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(false)

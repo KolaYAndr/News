@@ -15,10 +15,6 @@ class SearchViewModel @Inject constructor(private val repository: NewsRepository
     val searchNewsLiveData: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     private var searchNewsPage: Int = 1
 
-    init {
-        getSearchNews("")
-    }
-
     fun getSearchNews(query: String) =
         viewModelScope.launch {
             searchNewsLiveData.postValue(Resource.Loading())

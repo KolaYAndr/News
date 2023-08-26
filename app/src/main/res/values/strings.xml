@@ -7,4 +7,7 @@
     <string name="article_image">Article image</string>
     <string name="search">Search</string>
     <string name="search_here">Search here</string>
+    <string name="description">Description</string>
+    <string name="go_back">Go back</string>
+    <string name="visit_site">Visit site</string>
 </resources>

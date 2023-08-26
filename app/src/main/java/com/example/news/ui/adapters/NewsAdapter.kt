@@ -12,9 +12,9 @@ import com.example.news.R
 import com.example.news.models.Article
 import com.google.android.material.imageview.ShapeableImageView
 
-class NewsAdapter: RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
-    inner class NewsViewHolder(view: View): RecyclerView.ViewHolder(view)
+    inner class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     private val callback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -22,7 +22,7 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
         }
 
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return  oldItem == newItem
+            return oldItem == newItem
         }
     }
 
@@ -46,6 +46,10 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
             articleImage.clipToOutline = true
             articleTitle.text = article.title
             articleDate.text = article.publishedAt
+
+            setOnClickListener {
+                onItemClickListener?.let { it(article) }
+            }
         }
     }
 

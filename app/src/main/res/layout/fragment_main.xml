@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.main.MainFragment">
+    tools:context=".ui.fragments.main.MainFragment"
+    style="@style/Theme.News.Background">
 
     <TextView
         android:id="@+id/title_text"
@@ -13,7 +14,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/arial_rounded_mt_bold"
         android:text="@string/my_news"
-        android:textColor="@color/dark_grey"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +28,7 @@
         android:layout_marginTop="42dp"
         android:fontFamily="@font/arial_rounded_mt_bold"
         android:text="@string/popular_news"
-        android:textColor="@color/dark_grey"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_text" />

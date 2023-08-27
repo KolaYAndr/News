@@ -1,5 +1,7 @@
 package com.example.news.ui.fragments.main
 
+import android.content.res.Resources
+import androidx.core.os.ConfigurationCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,10 +15,13 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: NewsRepository) : ViewModel() {
     val newsLiveData: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var newsPage = 1
+    private var newsPage = 1
+    private val iso =
+        ConfigurationCompat.getLocales(Resources.getSystem().configuration).get(0)?.country
+            ?: "US"
 
     init {
-        getNews("us")
+        getNews(iso)
     }
 
     private fun getNews(countryCode: String) =

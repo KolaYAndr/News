@@ -5,7 +5,7 @@
     style="@style/Theme.News.Background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.DetailsFragment">
+    tools:context=".ui.fragments.details.DetailsFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"

@@ -65,7 +65,8 @@ class DetailsFragment : Fragment() {
                 }
             }
 
-            var liked = false//checkContaining(article)
+            val likeList = viewModel.getSavedArticles()
+            var liked = likeList.contains(article)
             binding.likeButton.setOnClickListener {
                 when (liked) {
                     false -> {
@@ -95,7 +96,6 @@ class DetailsFragment : Fragment() {
     }
 
 
-    //private fun checkContaining(article: Article) = launch(Dispatchers.Main) {viewModel.getArticles().contains(article) }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

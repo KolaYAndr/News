@@ -11,23 +11,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(private val repository: NewsRepository) : ViewModel() {
-
     init {
         getSavedArticles()
     }
-    fun getSavedArticles():List<Article> {
-        var articles: List<Article> = emptyList()
+    fun getSavedArticles(): List<Article> {
+        val articles = mutableListOf<Article>()
         viewModelScope.launch(Dispatchers.IO) {
-            articles = repository.getFavouriteArticles()
+            articles.addAll(repository.getFavouriteArticles())
         }
-        return articles
+        return articles.toList()
     }
-
-    fun saveToFavourite(article: Article) = viewModelScope.launch(Dispatchers.IO){
+    fun saveToFavourite(article: Article) = viewModelScope.launch(Dispatchers.IO) {
         repository.addToFavourite(article)
     }
 
-    fun deleteFromFavourite(article: Article) = viewModelScope.launch(Dispatchers.IO){
+    fun deleteFromFavourite(article: Article) = viewModelScope.launch(Dispatchers.IO) {
+        val res = repository.getFavouriteArticles()
+
+        println("before delete DB size: ${res.size}")
         repository.deleteFromFavourite(article)
+        val res1 = repository.getFavouriteArticles()
+        println("after delete DB size: ${res1.size}")
     }
 }

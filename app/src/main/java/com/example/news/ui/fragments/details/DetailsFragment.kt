@@ -23,19 +23,20 @@ class DetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private val bundleArgs: DetailsFragmentArgs by navArgs()
     private val viewModel by viewModels<DetailsViewModel>()
+    private var liked = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        setImage()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val articleArg = bundleArgs.article
 
-        articleArg.let { article ->
+        bundleArgs.article.let { article ->
             article.urlToImage.let {
                 Glide.with(this)
                     .load(article.urlToImage)
@@ -65,33 +66,35 @@ class DetailsFragment : Fragment() {
                 }
             }
 
-            val likeList = viewModel.getSavedArticles()
-            var liked = likeList.contains(article)
             binding.likeButton.setOnClickListener {
                 when (liked) {
-                    false -> {
-                        binding.likeButton.setImageResource(R.drawable.ic_like)
-                        viewModel.saveToFavourite(article)
-                    }
-
-                    true -> {
-                        binding.likeButton.setImageResource(R.drawable.ic_favourite)
-                        viewModel.deleteFromFavourite(article)
-                    }
+                    false -> viewModel.saveToFavourite(article)
+                    true -> viewModel.deleteFromFavourite(article)
                 }
 
                 liked = !liked
+                setImage()
             }
 
             binding.shareButton.setOnClickListener {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, article.url)
-                    type = "text/paint"
+                    type = "text/link"
                 }
                 val shareIntent = Intent.createChooser(sendIntent, null)
                 startActivity(shareIntent)
             }
+        }
+
+        //TODO
+        binding.backButton.setOnClickListener { requireActivity().onBackPressed() }
+    }
+
+    private fun setImage() {
+        when (liked) {
+            false -> binding.likeButton.setImageResource(R.drawable.ic_like)
+            true -> binding.likeButton.setImageResource(R.drawable.ic_favourite)
         }
     }
 

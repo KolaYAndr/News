@@ -11,4 +11,6 @@
     <string name="go_back">Go back</string>
     <string name="visit_site">Visit site</string>
     <string name="favourites">Favourites</string>
+    <string name="no_favourites_yes">No favourites yes</string>
+    <string name="make_sure">Make sure you have added event’s in this section</string>
 </resources>

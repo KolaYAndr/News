@@ -26,7 +26,7 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<SearchViewModel>()
-    private lateinit var newsAdapter: NewsAdapter
+    private lateinit var searchNewsAdapter: NewsAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +39,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
 
-        newsAdapter.setOnItemClickListener {
+        searchNewsAdapter.setOnItemClickListener {
             val bundle = bundleOf("article" to it)
             view.findNavController().navigate(
                 R.id.action_searchFragment_to_detailsFragment,
@@ -65,7 +65,7 @@ class SearchFragment : Fragment() {
                 is Resource.Success -> {
                     binding.searchProgressBar.visibility = View.INVISIBLE
                     response.data?.let {
-                        newsAdapter.differ.submitList(it.articles)
+                        searchNewsAdapter.differ.submitList(it.articles)
                     }
                 }
 
@@ -84,9 +84,9 @@ class SearchFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        newsAdapter = NewsAdapter()
+        searchNewsAdapter = NewsAdapter()
         binding.searchNewsAdapter.apply {
-            adapter = newsAdapter
+            adapter = searchNewsAdapter
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(false)
         }

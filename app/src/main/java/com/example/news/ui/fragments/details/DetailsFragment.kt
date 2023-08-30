@@ -66,6 +66,10 @@ class DetailsFragment : Fragment() {
                 }
             }
 
+            val likes = viewModel.favouritesLiveData.value
+            liked = likes?.contains(article) ?: false
+            setImage()
+
             binding.likeButton.setOnClickListener {
                 when (liked) {
                     false -> viewModel.saveToFavourite(article)
@@ -87,8 +91,9 @@ class DetailsFragment : Fragment() {
             }
         }
 
-        //TODO
-        binding.backButton.setOnClickListener { requireActivity().onBackPressed() }
+        binding.backButton.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun setImage() {

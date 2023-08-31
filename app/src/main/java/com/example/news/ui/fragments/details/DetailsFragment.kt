@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.news.MainActivity
 import com.example.news.R
 import com.example.news.databinding.FragmentDetailsBinding
 import com.example.news.models.Article
@@ -35,6 +36,8 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as MainActivity).hideBottomNavMenu()
 
         bundleArgs.article.let { article ->
             article.urlToImage.let {
@@ -87,7 +90,7 @@ class DetailsFragment : Fragment() {
         }
 
         binding.backButton.setOnClickListener {
-            requireActivity().onBackPressed()
+            //TODO
         }
     }
 
@@ -100,11 +103,7 @@ class DetailsFragment : Fragment() {
 
     private fun onLeaveAction(article: Article) = when (liked) {
         true -> viewModel.saveToFavourite(article)
-        false -> {
-            if (viewModel.favouritesLiveData.value?.contains(article) == true)
-                viewModel.deleteFromFavourite(article)
-            else {}
-        }
+        false -> viewModel.deleteFromFavourite(article)
     }
 
 

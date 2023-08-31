@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.news.MainActivity
 import com.example.news.R
 import com.example.news.databinding.FragmentMainBinding
 import com.example.news.ui.adapters.NewsAdapter
@@ -43,10 +42,6 @@ class MainFragment : Fragment() {
                 R.id.action_mainFragment_to_detailsFragment,
                 bundle
             )
-
-            activity.let {activity ->
-                (activity as MainActivity).hideBottomNavMenu()
-            }
         }
 
         viewModel.newsLiveData.observe(viewLifecycleOwner) { response ->

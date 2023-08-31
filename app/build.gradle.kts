@@ -62,7 +62,7 @@ dependencies {
     ksp("androidx.room:room-compiler:$roomVersion")
 
     //Coroutines
-    val coroutinesVersion = "1.6.4"
+    val coroutinesVersion = "1.7.3"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
@@ -77,7 +77,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     //OkHttp
-    val okHttpVersion = "4.9.0"
+    val okHttpVersion = "4.11.0"
     implementation("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
 
     //Navigation Component
@@ -86,7 +86,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
     //Glide
-    val glideVersion = "4.15.1"
+    val glideVersion = "4.16.0"
     implementation("com.github.bumptech.glide:glide:$glideVersion")
     ksp("com.github.bumptech.glide:compiler:$glideVersion")
 }

@@ -8,7 +8,7 @@ import androidx.room.Query
 import com.example.news.models.Article
 @Dao
 interface ArticleDao {
-    @Query("Select * from articles")
+    @Query("SELECT * FROM articles")
     fun getAllArticles(): List<Article>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

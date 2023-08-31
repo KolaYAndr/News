@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.news.MainActivity
 import com.example.news.R
 import com.example.news.databinding.FragmentSearchBinding
 import com.example.news.ui.adapters.NewsAdapter
@@ -45,6 +46,10 @@ class SearchFragment : Fragment() {
                 R.id.action_searchFragment_to_detailsFragment,
                 bundle
             )
+
+            activity.let {activity ->
+                (activity as MainActivity).hideBottomNavMenu()
+            }
         }
 
         var job: Job? = null

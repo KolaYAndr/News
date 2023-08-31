@@ -1,6 +1,7 @@
 package com.example.news
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
@@ -20,5 +21,14 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment)
         binding.bottomNavMenu.setupWithNavController(navController = navController)
+    }
+
+    fun hideBottomNavMenu() {
+        binding.bottomNavMenu.visibility = View.INVISIBLE
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        binding.bottomNavMenu.visibility = View.VISIBLE
     }
 }

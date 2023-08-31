@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.news.R
 import com.example.news.databinding.FragmentDetailsBinding
+import com.example.news.models.Article
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +30,6 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        setImage()
         return binding.root
     }
 
@@ -68,16 +68,11 @@ class DetailsFragment : Fragment() {
 
             val likes = viewModel.favouritesLiveData.value
             liked = likes?.contains(article) ?: false
-            setImage()
+            setLikeButtonImageSource()
 
             binding.likeButton.setOnClickListener {
-                when (liked) {
-                    false -> viewModel.saveToFavourite(article)
-                    true -> viewModel.deleteFromFavourite(article)
-                }
-
                 liked = !liked
-                setImage()
+                setLikeButtonImageSource()
             }
 
             binding.shareButton.setOnClickListener {
@@ -96,16 +91,26 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun setImage() {
+    private fun setLikeButtonImageSource() {
         when (liked) {
             false -> binding.likeButton.setImageResource(R.drawable.ic_like)
             true -> binding.likeButton.setImageResource(R.drawable.ic_favourite)
         }
     }
 
+    private fun onLeaveAction(article: Article) = when (liked) {
+        true -> viewModel.saveToFavourite(article)
+        false -> {
+            if (viewModel.favouritesLiveData.value?.contains(article) == true)
+                viewModel.deleteFromFavourite(article)
+            else {}
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
+        onLeaveAction(bundleArgs.article)
         _binding = null
     }
 }

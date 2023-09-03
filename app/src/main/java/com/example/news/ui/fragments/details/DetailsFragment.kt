@@ -13,10 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.news.MainActivity
 import com.example.news.R
 import com.example.news.databinding.FragmentDetailsBinding
 import com.example.news.models.Article
+import com.example.news.utils.ViewControl
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +37,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).hideBottomNavMenu()
+        (activity as ViewControl).hideBottomNavMenu()
 
         bundleArgs.article.let { article ->
             article.urlToImage.let {
@@ -90,7 +90,8 @@ class DetailsFragment : Fragment() {
         }
 
         binding.backButton.setOnClickListener {
-            //TODO
+            requireActivity().onBackPressed()
+            (activity as ViewControl).showBottomNavMenu()
         }
     }
 

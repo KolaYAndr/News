@@ -1,9 +1,10 @@
 # Приложение агрегатор новостей
-## Технологии
+## Технологии и архитектура
+* MVVM
+* Views (xml) + Jetpack Navigation
 * Room database
 * Coroutines
 * Dagger Hilt
 * Retrofit
 * OkHTTP
-* Views + Jetpack Navigation
 * Glide
